@@ -63,7 +63,10 @@
 (define (slice-layers-aux
          given-image
          vertical-or-horizontal
-         size-of-slice-as-percentage))
+         size-of-slice-as-percentage)
+  (let* ((all-layer-ids
+          (vector->list
+           (cadr (gimp-image-get-layers given-image)))))))
 
 
 (script-fu-register "script-fu-slice-layers"
