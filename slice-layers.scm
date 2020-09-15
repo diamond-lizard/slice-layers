@@ -44,13 +44,18 @@
          vertical-or-horizontal
          size-of-slice-as-percentage)
   (gimp-image-undo-group-start given-image)
-  (let* ((old-selection (car (gimp-selection-save given-image))))
+  ; Save the current selection and foreground color
+  (let* ((old-selection (car (gimp-selection-save given-image)))
+         (old-foreground-color (car (gimp-context-get-foreground))))
+    ; Do the slicing
     (slice-layers-aux
      given-image
      vertical-or-horizontal
      size-of-slice-as-percentage)
     ; Restore old selection
-    (gimp-image-select-item given-image CHANNEL-OP-REPLACE old-selection))
+    (gimp-image-select-item given-image CHANNEL-OP-REPLACE old-selection)
+    ; Restore old foreground color
+    (gimp-context-set-foreground old-foreground-color))
   (gimp-image-undo-group-end given-image)
   (gimp-displays-flush))
 
