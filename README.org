@@ -1,0 +1,57 @@
+* Slice Layers
+** Description
+This script will produce a "slicing" effect on any image made up of two or more different layers.
+*** Inspiration
+This script was inspired by u/trandoductin's post titled: [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/][8 different images of Buddha, but each image only show 1 every 8 columns]]
+**** trandoductin's [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/g5dwy9v/][instructions for generating the image were]]:
+***** 1 - load 8 images as layers
+***** 2 - Add layer mask and alpha channel to them (the top 7 layers).
+***** 3 - on separate image, 8x8 pixel
+****** 3a - make it all black then draw a white line on 2nd column pixels
+****** 3b - copy all to have it in the pattern window
+****** 3c - then on 2nd layer of 8 layer image select the mask drag copied pattern onto image to fill the layer mask with the 8x8 pattern with 2nd column as white.
+***** 4 - repeat step 3 for other layers drawing a different white column each time.
+*** Alternatives
+G'MIC 2.9.0_pre has a new filter under Sequences / Moiré Animation which is supposed to do something similar
+** Installation
+*** 1
+Copy the "slice-layers.scm" file to $XDG_CONFIG_HOME/GIMP/2.10/scripts or an alternate location (chosen via Preferences -> Folders -> Scripts)
+*** 2
+Filters -> Script-Fu -> Refresh Scripts
+** Use
+*** 1 - Make sure the image's mode is RGB (Image -> Mode -> RGB)
+*** 2 - Load different images in to two or more layers
+*** 2 - Run the script from: Filters -> Artistic -> Slice Layers
+*** 3 - Set the script's parameters to your taste in the dialog that appears.
+*** 4 - Click "OK" to generate the sliced image
+** User-configurable parameters
+*** Vertical or horizontal slices?
+Choose whether to slice the image vertically or horizontally.
+*** Size of slice, as a percentage
+**** If you have selected vertical slices, this will be the percentage of each layer's width to use as the slice width.
+**** If you have selected horizontal slices, this will be the percentage of each layer's height to use as the slice height.
+** Testing:
+This script was only tested on GIMP 2.10.8 on amd64 Gentoo Linux
+** FAQ
+*** Why is the Slice Layers script grayed out in the Artistic Filters menu?
+Your image is probably not open in RGB mode.  Convert it to RGB using Image -> Mode -> RGB
+*** The script does not seem to have any effect
+If you have only one layer or each layer in your image is the same, you won't see an effect.
+You must have two or more layers in your image, and each layer must be different.
+** Issues and bugs
+*** Report bugs here:  https://github.com/diamond-lizard/slice-layers/issues
+** LICENSE
+Copyright (C) 2020 - Sergey Goldgaber
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
