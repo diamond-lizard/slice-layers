@@ -76,7 +76,7 @@
       (let* ((ignored (gimp-layer-add-alpha layer-id))
              (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
         (gimp-layer-add-mask layer-id mask)
-        (slice-layer-fill-mask-with-pattern
+        (slice-layer--fill-mask-with-pattern
          given-image
          layer-id
          vertical-or-horizontal
@@ -86,7 +86,7 @@
          mask))))
 
 
-(define (slice-layer-fill-mask-with-pattern
+(define (slice-layer--fill-mask-with-pattern
          given-image
          layer-id
          vertical-or-horizontal
