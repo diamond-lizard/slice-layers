@@ -73,7 +73,7 @@
           (car (gimp-image-get-item-position
                 given-image
                 layer-id)))
-         (lowest-layer-id (- number-of-layers 1)))
+         (lowest-layer-id number-of-layers))
     ; Skip the lowest layer
     ; because only the rest of the layers need layer masks
     (if (< layer-position lowest-layer-id)
