@@ -67,7 +67,6 @@
          layer-id
          vertical-or-horizontal
          slice-width-in-pixels
-         layer-id
          number-of-layers)
   (let* ((layer-position
           (car (gimp-image-get-item-position
@@ -130,7 +129,6 @@
               layer-id
               vertical-or-horizontal
               slice-width-in-pixels
-              layer-id
               number-of-layers)) all-layer-ids)))
 
 
