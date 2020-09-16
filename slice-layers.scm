@@ -64,6 +64,7 @@
 
 (define (slice-layer
          given-image
+         layer-id
          vertical-or-horizontal
          slice-width-in-pixels
          layer-id
@@ -78,8 +79,50 @@
     (if (< layer-position lowest-layer-id)
         (let* ((ignored (gimp-layer-add-alpha layer-id))
                (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
-          (gimp-layer-add-mask layer-id mask)))))
+          (gimp-layer-add-mask layer-id mask)
+          (slice-layer-fill-mask-with-pattern
+           given-image
+           layer-id
+           vertical-or-horizontal
+           slice-width-in-pixels
+           layer-position
+           number-of-layers
+           mask)))))
 
+
+(define (slice-layer-fill-mask-with-pattern
+         given-image
+         layer-id
+         vertical-or-horizontal
+         slice-width-in-pixels
+         layer-position
+         number-of-layers
+         mask)
+  (let* ((image-layer-height (car (gimp-drawable-height layer-id)))
+         (image-layer-width  (car (gimp-drawable-width  layer-id)))
+         (pattern-layer-height (* number-of-layers slice-width-in-pixels))
+         (pattern-layer-width pattern-layer-height)
+         (pattern-layer-type  (car (gimp-drawable-type layer-id)))
+         (pattern-layer-name "Slice Layers Pattern")
+         (pattern-layer-opacity 100)
+         (pattern-layer-mode LAYER-MODE-NORMAL)
+         (pattern-layer
+          (car (gimp-layer-new
+                given-image
+                pattern-layer-width
+                pattern-layer-height
+                pattern-layer-type
+                pattern-layer-name
+                pattern-layer-opacity
+                pattern-layer-mode)))
+         (pattern-layer-parent 0)
+         (pattern-layer-position -1)
+         (ignored
+          (gimp-image-insert-layer
+           given-image
+           pattern-layer
+           pattern-layer-parent
+           pattern-layer-position)))))
 
 (define (slice-layers-aux
          given-image
@@ -94,6 +137,7 @@
     (map (lambda (layer-id)
              (slice-layer
               given-image
+              layer-id
               vertical-or-horizontal
               slice-width-in-pixels
               layer-id
