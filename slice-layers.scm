@@ -62,52 +62,6 @@
   (gimp-displays-flush))
 
 
-(define (slice-layers--slice-layer
-         given-image
-         layer-id
-         layer-position
-         lowest-layer-position
-         vertical-or-horizontal
-         slice-width-in-pixels
-         number-of-layers)
-  ; Skip the lowest layer
-  ; because only the rest of the layers need layer masks
-  (if (< layer-position lowest-layer-position)
-      (let* ((ignored (gimp-layer-add-alpha layer-id))
-             (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
-        (gimp-layer-add-mask layer-id mask)
-        (slice-layer--fill-mask-with-pattern
-         given-image
-         layer-id
-         vertical-or-horizontal
-         slice-width-in-pixels
-         layer-position
-         number-of-layers
-         mask))))
-
-
-(define (slice-layer--fill-mask-with-pattern
-         given-image
-         layer-id
-         vertical-or-horizontal
-         slice-width-in-pixels
-         layer-position
-         number-of-layers
-         mask)
-  (let* ((pattern-layer
-          (slice-layers--make-pattern-layer
-           given-image
-           layer-id
-           number-of-layers
-           slice-width-in-pixels))
-         (ignored
-          (slice-layers--fill-layer-with-white
-           pattern-layer)))))
-         ;; (black '(0 0 0))
-         ;; (ignored
-         ;;  (gimp-context-set-foreground black))
-
-
 (define (slice-layers--aux
          given-image
          vertical-or-horizontal
@@ -154,6 +108,28 @@
      gimp-drawable-fill-type)))
 
 
+(define (slice-layer--fill-mask-with-pattern
+         given-image
+         layer-id
+         vertical-or-horizontal
+         slice-width-in-pixels
+         layer-position
+         number-of-layers
+         mask)
+  (let* ((pattern-layer
+          (slice-layers--make-pattern-layer
+           given-image
+           layer-id
+           number-of-layers
+           slice-width-in-pixels))
+         (ignored
+          (slice-layers--fill-layer-with-white
+           pattern-layer)))))
+         ;; (black '(0 0 0))
+         ;; (ignored
+         ;;  (gimp-context-set-foreground black))
+
+
 (define (slice-layers--make-pattern-layer
          given-image
          layer-id
@@ -185,6 +161,30 @@
            pattern-layer-parent
            pattern-layer-position)))
     pattern-layer))
+
+
+(define (slice-layers--slice-layer
+         given-image
+         layer-id
+         layer-position
+         lowest-layer-position
+         vertical-or-horizontal
+         slice-width-in-pixels
+         number-of-layers)
+  ; Skip the lowest layer
+  ; because only the rest of the layers need layer masks
+  (if (< layer-position lowest-layer-position)
+      (let* ((ignored (gimp-layer-add-alpha layer-id))
+             (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
+        (gimp-layer-add-mask layer-id mask)
+        (slice-layer--fill-mask-with-pattern
+         given-image
+         layer-id
+         vertical-or-horizontal
+         slice-width-in-pixels
+         layer-position
+         number-of-layers
+         mask))))
 
 
 (script-fu-register "script-fu-slice-layers"
