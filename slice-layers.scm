@@ -44,7 +44,7 @@
          given-image
          given-layer
          vertical-or-horizontal
-         size-of-slice-as-percentage)
+         slice-width-in-pixels)
   (gimp-image-undo-group-start given-image)
   ; Save the current selection and foreground color
   (let* ((old-selection (car (gimp-selection-save given-image)))
@@ -53,7 +53,7 @@
     (slice-layers-aux
      given-image
      vertical-or-horizontal
-     size-of-slice-as-percentage)
+     slice-width-in-pixels)
     ; Restore old selection
     (gimp-image-select-item given-image CHANNEL-OP-REPLACE old-selection)
     ; Restore old foreground color
@@ -65,7 +65,7 @@
 (define (slice-layer
          given-image
          vertical-or-horizontal
-         size-of-slice-as-percentage
+         slice-width-in-pixels
          layer-id
          number-of-layers)
   (let* ((layer-position
@@ -84,7 +84,7 @@
 (define (slice-layers-aux
          given-image
          vertical-or-horizontal
-         size-of-slice-as-percentage)
+         slice-width-in-pixels)
   (let* ((all-layers (gimp-image-get-layers given-image))
          (all-layer-ids
           (vector->list
@@ -95,7 +95,7 @@
              (slice-layer
               given-image
               vertical-or-horizontal
-              size-of-slice-as-percentage
+              slice-width-in-pixels
               layer-id
               number-of-layers)) all-layer-ids)))
 
@@ -110,7 +110,7 @@
                     SF-IMAGE "Image" 0
                     SF-DRAWABLE "Layer" 0
                     SF-OPTION "Vertical or horizontal slices?" '("Vertical" "Horizontal")
-                    SF-ADJUSTMENT "Size of slice, as a percentage:" '(2 1 100 1 10 0 SF-SPINNER))
+                    SF-ADJUSTMENT "Slice width in pixels:" '(1 1 100000000 1 10 0 SF-SPINNER))
 
 
 (script-fu-menu-register "script-fu-slice-layers" "<Image>/Filters/Artistic")
