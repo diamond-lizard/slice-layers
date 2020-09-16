@@ -98,6 +98,47 @@
          layer-position
          number-of-layers
          mask)
+  (let* ((pattern-layer
+          (slice-layers-make-pattern-layer
+           given-image
+           layer-id
+           number-of-layers
+           slice-width-in-pixels))
+         (white '(255 255 255))
+         (ignored
+          (gimp-context-set-foreground white))
+         (gimp-drawable-fill-type FILL-FOREGROUND)
+         (ignored
+          (gimp-drawable-fill
+           pattern-layer
+           gimp-drawable-fill-type)))))
+
+
+(define (slice-layers-aux
+         given-image
+         vertical-or-horizontal
+         slice-width-in-pixels)
+  (let* ((all-layers (gimp-image-get-layers given-image))
+         (all-layer-ids
+          (vector->list
+           (cadr all-layers)))
+         (number-of-layers
+          (car all-layers)))
+    (map (lambda (layer-id)
+             (slice-layer
+              given-image
+              layer-id
+              vertical-or-horizontal
+              slice-width-in-pixels
+              layer-id
+              number-of-layers)) all-layer-ids)))
+
+
+(define (slice-layers-make-pattern-layer
+         given-image
+         layer-id
+         number-of-layers
+         slice-width-in-pixels)
   (let* ((image-layer-height (car (gimp-drawable-height layer-id)))
          (image-layer-width  (car (gimp-drawable-width  layer-id)))
          (pattern-layer-height (* number-of-layers slice-width-in-pixels))
@@ -122,26 +163,8 @@
            given-image
            pattern-layer
            pattern-layer-parent
-           pattern-layer-position)))))
-
-(define (slice-layers-aux
-         given-image
-         vertical-or-horizontal
-         slice-width-in-pixels)
-  (let* ((all-layers (gimp-image-get-layers given-image))
-         (all-layer-ids
-          (vector->list
-           (cadr all-layers)))
-         (number-of-layers
-          (car all-layers)))
-    (map (lambda (layer-id)
-             (slice-layer
-              given-image
-              layer-id
-              vertical-or-horizontal
-              slice-width-in-pixels
-              layer-id
-              number-of-layers)) all-layer-ids)))
+           pattern-layer-position)))
+    pattern-layer))
 
 
 (script-fu-register "script-fu-slice-layers"
