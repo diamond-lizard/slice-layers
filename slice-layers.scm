@@ -100,14 +100,9 @@
            layer-id
            number-of-layers
            slice-width-in-pixels))
-         (white '(255 255 255))
          (ignored
-          (gimp-context-set-foreground white))
-         (gimp-drawable-fill-type FILL-FOREGROUND)
-         (ignored
-          (gimp-drawable-fill
-           pattern-layer
-           gimp-drawable-fill-type)))))
+          (slice-layers--fill-layer-with-white
+           pattern-layer)))))
          ;; (black '(0 0 0))
          ;; (ignored
          ;;  (gimp-context-set-foreground black))
@@ -146,6 +141,17 @@
               slice-width-in-pixels
               number-of-layers)))
          layers-and-positions)))
+
+
+(define (slice-layers--fill-layer-with-white
+         layer)
+  (let* ((white '(255 255 255))
+         (ignored
+          (gimp-context-set-foreground white))
+         (gimp-drawable-fill-type FILL-FOREGROUND))
+    (gimp-drawable-fill
+     layer
+     gimp-drawable-fill-type)))
 
 
 (define (slice-layers-make-pattern-layer
