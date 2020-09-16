@@ -124,10 +124,44 @@
            slice-width-in-pixels))
          (ignored
           (slice-layers--fill-layer-with-white
-           pattern-layer)))))
-         ;; (black '(0 0 0))
-         ;; (ignored
-         ;;  (gimp-context-set-foreground black))
+           pattern-layer))
+         (ignored
+          (slice-layers--fill-slice-with-black
+           given-image
+           pattern-layer
+           layer-position
+           number-of-layers
+           vertical-or-horizontal
+           slice-width-in-pixels)))))
+
+
+(define (slice-layers--fill-slice-with-black
+         given-image
+         layer
+         layer-position
+         number-of-layers
+         vertical-or-horizontal
+         slice-width-in-pixels)
+  (if (equal? vertical-or-horizontal 0)
+      (let* ((upper-left-x
+              (* layer-position slice-width-in-pixels))
+             (upper-left-y 0)
+             (width slice-width-in-pixels)
+             (height (car (gimp-drawable-height layer)))
+             (black '(0 0 0))
+             (gimp-drawable-fill-type FILL-FOREGROUND))
+        (gimp-image-select-rectangle
+         given-image
+         CHANNEL-OP-REPLACE
+         upper-left-x
+         upper-left-y
+         width
+         height)
+        (gimp-context-set-foreground black)
+        (gimp-edit-fill
+         layer
+         gimp-drawable-fill-type)
+        (gimp-selection-none given-image))))
 
 
 (define (slice-layers--make-pattern-layer
