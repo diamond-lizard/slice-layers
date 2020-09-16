@@ -95,7 +95,7 @@
          number-of-layers
          mask)
   (let* ((pattern-layer
-          (slice-layers-make-pattern-layer
+          (slice-layers--make-pattern-layer
            given-image
            layer-id
            number-of-layers
@@ -154,7 +154,7 @@
      gimp-drawable-fill-type)))
 
 
-(define (slice-layers-make-pattern-layer
+(define (slice-layers--make-pattern-layer
          given-image
          layer-id
          number-of-layers
