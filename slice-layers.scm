@@ -72,10 +72,10 @@
           (car (gimp-image-get-item-position
                 given-image
                 layer-id)))
-         (lowest-layer-id number-of-layers))
+         (lowest-layer-position number-of-layers))
     ; Skip the lowest layer
     ; because only the rest of the layers need layer masks
-    (if (< layer-position lowest-layer-id)
+    (if (< layer-position lowest-layer-position)
         (let* ((ignored (gimp-layer-add-alpha layer-id))
                (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
           (gimp-layer-add-mask layer-id mask)
