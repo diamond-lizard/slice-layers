@@ -62,6 +62,23 @@
   (gimp-displays-flush))
 
 
+(define (slice-layer
+         given-image
+         vertical-or-horizontal
+         size-of-slice-as-percentage
+         layer-id
+         number-of-layers)
+  (let* ((layer-position
+          (car (gimp-image-get-item-position
+                given-image
+                layer-id)))
+         (lowest-layer-id (- number-of-layers 1)))
+    ; Skip the lowest layer
+    ; because only the rest of the layers need layer masks
+    (if (< layer-position lowest-layer-id)
+        (gimp-layer-add-alpha layer-id))))
+
+
 (define (slice-layers-aux
          given-image
          vertical-or-horizontal
@@ -71,7 +88,14 @@
           (vector->list
            (cadr all-layers)))
          (number-of-layers
-          (car all-layers)))))
+          (car all-layers)))
+    (map (lambda (layer-id)
+             (slice-layer
+              given-image
+              vertical-or-horizontal
+              size-of-slice-as-percentage
+              layer-id
+              number-of-layers)) all-layer-ids)))
 
 
 (script-fu-register "script-fu-slice-layers"
