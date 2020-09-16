@@ -65,28 +65,25 @@
 (define (slice-layer
          given-image
          layer-id
+         layer-position
+         lowest-layer-position
          vertical-or-horizontal
          slice-width-in-pixels
          number-of-layers)
-  (let* ((layer-position
-          (car (gimp-image-get-item-position
-                given-image
-                layer-id)))
-         (lowest-layer-position number-of-layers))
-    ; Skip the lowest layer
-    ; because only the rest of the layers need layer masks
-    (if (< layer-position lowest-layer-position)
-        (let* ((ignored (gimp-layer-add-alpha layer-id))
-               (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
-          (gimp-layer-add-mask layer-id mask)
-          (slice-layer-fill-mask-with-pattern
-           given-image
-           layer-id
-           vertical-or-horizontal
-           slice-width-in-pixels
-           layer-position
-           number-of-layers
-           mask)))))
+  ; Skip the lowest layer
+  ; because only the rest of the layers need layer masks
+  (if (< layer-position lowest-layer-position)
+      (let* ((ignored (gimp-layer-add-alpha layer-id))
+             (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
+        (gimp-layer-add-mask layer-id mask)
+        (slice-layer-fill-mask-with-pattern
+         given-image
+         layer-id
+         vertical-or-horizontal
+         slice-width-in-pixels
+         layer-position
+         number-of-layers
+         mask))))
 
 
 (define (slice-layer-fill-mask-with-pattern
@@ -111,6 +108,9 @@
           (gimp-drawable-fill
            pattern-layer
            gimp-drawable-fill-type)))))
+         ;; (black '(0 0 0))
+         ;; (ignored
+         ;;  (gimp-context-set-foreground black))
 
 
 (define (slice-layers-aux
@@ -122,14 +122,30 @@
           (vector->list
            (cadr all-layers)))
          (number-of-layers
-          (car all-layers)))
-    (map (lambda (layer-id)
+          (car all-layers))
+         (lowest-layer-position (- number-of-layers 1))
+         (layers-and-positions
+          (map (lambda (layer-id)
+                 (let ((layer-position
+                        (car (gimp-image-get-item-position
+                              given-image
+                              layer-id))))
+                   (cons layer-id layer-position)))
+               all-layer-ids)))
+    (map (lambda (layer-and-position)
+           (let ((layer-id
+                  (car layer-and-position))
+                 (layer-position
+                  (cdr layer-and-position)))
              (slice-layer
               given-image
               layer-id
+              layer-position
+              lowest-layer-position
               vertical-or-horizontal
               slice-width-in-pixels
-              number-of-layers)) all-layer-ids)))
+              number-of-layers)))
+         layers-and-positions)))
 
 
 (define (slice-layers-make-pattern-layer
