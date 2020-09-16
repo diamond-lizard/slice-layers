@@ -50,7 +50,7 @@
   (let* ((old-selection (car (gimp-selection-save given-image)))
          (old-foreground-color (car (gimp-context-get-foreground))))
     ; Do the slicing
-    (slice-layers-aux
+    (slice-layers--aux
      given-image
      vertical-or-horizontal
      slice-width-in-pixels)
@@ -108,7 +108,7 @@
          ;;  (gimp-context-set-foreground black))
 
 
-(define (slice-layers-aux
+(define (slice-layers--aux
          given-image
          vertical-or-horizontal
          slice-width-in-pixels)
