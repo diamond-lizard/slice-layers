@@ -76,7 +76,9 @@
     ; Skip the lowest layer
     ; because only the rest of the layers need layer masks
     (if (< layer-position lowest-layer-id)
-        (gimp-layer-add-alpha layer-id))))
+        (let* ((ignored (gimp-layer-add-alpha layer-id))
+               (mask (car (gimp-layer-create-mask layer-id ADD-MASK-WHITE))))
+          (gimp-layer-add-mask layer-id mask)))))
 
 
 (define (slice-layers-aux
