@@ -142,26 +142,36 @@
          number-of-layers
          vertical-or-horizontal
          slice-width-in-pixels)
-  (if (equal? vertical-or-horizontal 0)
-      (let* ((upper-left-x
-              (* layer-position slice-width-in-pixels))
-             (upper-left-y 0)
-             (width slice-width-in-pixels)
-             (height (car (gimp-drawable-height layer)))
-             (black '(0 0 0))
-             (gimp-drawable-fill-type FILL-FOREGROUND))
-        (gimp-image-select-rectangle
-         given-image
-         CHANNEL-OP-REPLACE
-         upper-left-x
-         upper-left-y
-         width
-         height)
-        (gimp-context-set-foreground black)
-        (gimp-edit-fill
-         layer
-         gimp-drawable-fill-type)
-        (gimp-selection-none given-image))))
+  (let ((upper-left-x
+         (if (equal? vertical-or-horizontal 0)
+             (* layer-position slice-width-in-pixels)
+             0))
+        (upper-left-y
+         (if (equal? vertical-or-horizontal 0)
+             0
+             (* layer-position slice-width-in-pixels)))
+        (width
+         (if (equal? vertical-or-horizontal 0)
+             slice-width-in-pixels
+             (car (gimp-drawable-width layer))))
+        (height
+         (if (equal? vertical-or-horizontal 0)
+             (car (gimp-drawable-height layer))
+             slice-width-in-pixels))
+        (black '(0 0 0))
+        (gimp-drawable-fill-type FILL-FOREGROUND))
+    (gimp-image-select-rectangle
+     given-image
+     CHANNEL-OP-REPLACE
+     upper-left-x
+     upper-left-y
+     width
+     height)
+    (gimp-context-set-foreground black)
+    (gimp-edit-fill
+     layer
+     gimp-drawable-fill-type)
+    (gimp-selection-none given-image)))
 
 
 (define (slice-layers--make-pattern-layer
