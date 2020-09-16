@@ -62,7 +62,7 @@
   (gimp-displays-flush))
 
 
-(define (slice-layer
+(define (slice-layers--slice-layer
          given-image
          layer-id
          layer-position
@@ -132,7 +132,7 @@
                   (car layer-and-position))
                  (layer-position
                   (cdr layer-and-position)))
-             (slice-layer
+             (slice-layers--slice-layer
               given-image
               layer-id
               layer-position
