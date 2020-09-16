@@ -21,9 +21,10 @@ Filters -> Script-Fu -> Refresh Scripts
 ** Use
 *** 1 - Make sure the image's mode is RGB (Image -> Mode -> RGB)
 *** 2 - Load different images in to two or more layers
-*** 2 - Run the script from: Filters -> Artistic -> Slice Layers
-*** 3 - Set the script's parameters to your taste in the dialog that appears.
-*** 4 - Click "OK" to generate the sliced image
+*** 3 - Click on any layer in the Layers tab
+*** 4 - Run the script from: Filters -> Artistic -> Slice Layers
+*** 5 - Set the script's parameters to your taste in the dialog that appears.
+*** 6 - Click "OK" to generate the sliced image
 ** User-configurable parameters
 *** Vertical or horizontal slices?
 Choose whether to slice the image vertically or horizontally.
@@ -33,8 +34,12 @@ Choose whether to slice the image vertically or horizontally.
 ** Testing:
 This script was only tested on GIMP 2.10.8 on amd64 Gentoo Linux
 ** FAQ
-*** Why is the Slice Layers script grayed out in the Artistic Filters menu?
-Your image is probably not open in RGB mode.  Convert it to RGB using Image -> Mode -> RGB
+*** Why might the Slice Layers script be grayed out in the Artistic Filters menu?
+**** Make sure you have one layer selected by clicking on any layer in the Layers tab.
+Then try running the script again.
+**** Your image may not be in RGB mode.
+Convert it to RGB using Image -> Mode -> RGB
+Then try running the script again.
 *** The script does not seem to have any effect
 If you have only one layer or each layer in your image is the same, you won't see an effect.
 You must have two or more layers in your image, and each layer must be different.
