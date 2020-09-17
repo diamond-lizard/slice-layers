@@ -28,6 +28,7 @@ Filters -> Script-Fu -> Refresh Scripts
 *** 3 - Run the script from: Filters -> Artistic -> Slice Layers
 *** 4 - Set the script's parameters to your taste in the dialog that appears.
 *** 5 - Click "OK" to generate the sliced image
+*** 6 - (Optional) Play around with the opacity of the layers to get different effects
 ** User-configurable parameters
 *** Vertical or horizontal slices?
 Choose whether to slice the image vertically or horizontally.
