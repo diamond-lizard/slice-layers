@@ -1,18 +1,6 @@
 * Slice Layers
 ** Description
 This script will produce a "slicing" effect on any image made up of two or more different layers.
-*** Inspiration
-This script was inspired by u/trandoductin's post titled: [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/][8 different images of Buddha, but each image only show 1 every 8 columns]]
-**** trandoductin's [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/g5dwy9v/][instructions for generating the image were]]:
-***** 1 - load 8 images as layers
-***** 2 - Add layer mask and alpha channel to them (the top 7 layers).
-***** 3 - on separate image, 8x8 pixel
-****** 3a - make it all black then draw a white line on 2nd column pixels
-****** 3b - copy all to have it in the pattern window
-****** 3c - then on 2nd layer of 8 layer image select the mask drag copied pattern onto image to fill the layer mask with the 8x8 pattern with 2nd column as white.
-***** 4 - repeat step 3 for other layers drawing a different white column each time.
-*** Alternatives
-**** [[https://gmic.eu/][G'MIC]]'s [[https://twitter.com/gmic_eu/status/1234525005725229056][Sequences / Moiré Animation filter]] has a similar effect, but it does not allow one to set the slice width it only generates a merged frame and a mask so it's impossible to manipulate the original layers after applying the filter to get a different effect
 ** Installation
 *** 1
 Copy the "slice-layers.scm" file to $XDG_CONFIG_HOME/GIMP/2.10/scripts or an alternate location (chosen via Preferences -> Folders -> Scripts)
@@ -49,6 +37,18 @@ If you have only one layer or each layer in your image is the same, you won't se
 You must have two or more layers in your image, and each layer must be different.
 ** Issues and bugs
 *** Report bugs: [[https://github.com/diamond-lizard/slice-layers/issues][here]].
+** Inspiration
+This script was inspired by u/trandoductin's post titled: [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/][8 different images of Buddha, but each image only show 1 every 8 columns]]
+*** trandoductin's [[https://old.reddit.com/r/GIMP/comments/itb7as/8_different_images_of_buddha_but_each_image_only/g5dwy9v/][instructions for generating the image were]]:
+**** 1 - load 8 images as layers
+**** 2 - Add layer mask and alpha channel to them (the top 7 layers).
+**** 3 - on separate image, 8x8 pixel
+***** 3a - make it all black then draw a white line on 2nd column pixels
+***** 3b - copy all to have it in the pattern window
+***** 3c - then on 2nd layer of 8 layer image select the mask drag copied pattern onto image to fill the layer mask with the 8x8 pattern with 2nd column as white.
+**** 4 - repeat step 3 for other layers drawing a different white column each time.
+** Alternatives
+*** [[https://gmic.eu/][G'MIC]]'s [[https://twitter.com/gmic_eu/status/1234525005725229056][Sequences / Moiré Animation filter]] has a similar effect, but it does not allow one to set the slice width it only generates a merged frame and a mask so it's impossible to manipulate the original layers after applying the filter to get a different effect
 ** LICENSE
 Copyright (C) 2020 - Sergey Goldgaber
 
