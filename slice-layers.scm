@@ -45,6 +45,19 @@
          given-layer
          vertical-or-horizontal
          slice-width-in-pixels)
+  ;; Do some sanity checks
+  (let* ((all-layers (gimp-image-get-layers given-image))
+         (all-layer-ids
+          (vector->list
+           (cadr all-layers)))
+         (number-of-layers
+          (car all-layers))
+         (minimum-number-of-layers 2))
+    (when (< number-of-layers minimum-number-of-layers)
+      (begin
+        (gimp-message
+         "Error: The Slice Layers script requires a minimum of two layers to work.")
+        (quit))))
   (gimp-image-undo-group-start given-image)
   ; Save the current selection and foreground color
   (let* ((old-selection (car (gimp-selection-save given-image)))
