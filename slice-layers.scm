@@ -48,6 +48,7 @@
   (gimp-image-undo-group-start given-image)
   ; Save the current selection and foreground color
   (let* ((old-selection (car (gimp-selection-save given-image)))
+         (old-pattern (car (gimp-context-get-pattern)))
          (old-foreground-color (car (gimp-context-get-foreground))))
     ; Do the slicing
     (slice-layers--aux
@@ -56,6 +57,8 @@
      slice-width-in-pixels)
     ; Restore old selection
     (gimp-image-select-item given-image CHANNEL-OP-REPLACE old-selection)
+    ; Restore old pattern
+    (gimp-context-set-pattern old-pattern)
     ; Restore old foreground color
     (gimp-context-set-foreground old-foreground-color))
   (gimp-image-undo-group-end given-image)
@@ -132,7 +135,27 @@
            layer-position
            number-of-layers
            vertical-or-horizontal
-           slice-width-in-pixels)))))
+           slice-width-in-pixels))
+         (ignored
+          (slice-layers--select-all
+           given-image
+           pattern-layer))
+         (copy-result
+          (car (gimp-edit-copy pattern-layer))))
+    (gimp-selection-none given-image)
+    (if (equal? copy-result TRUE)
+        (begin
+          (gimp-image-remove-layer
+           given-image
+           pattern-layer)
+          (gimp-context-set-pattern "Clipboard Image")
+          (gimp-edit-fill
+           mask
+           FILL-PATTERN))
+        (begin
+          (gimp-message "Error: Copying pattern failed.  This should never happen.")
+          (gimp-image-undo-group-end given-image)
+          (quit)))))
 
 
 (define (slice-layers--fill-slice-with-black
@@ -205,6 +228,23 @@
            pattern-layer-parent
            pattern-layer-position)))
     pattern-layer))
+
+
+(define (slice-layers--select-all
+         given-image
+         given-layer)
+  (let ((operation CHANNEL-OP-REPLACE)
+        (upper-left-x 0)
+        (upper-left-y 0)
+        (width  (car (gimp-drawable-width  given-layer)))
+        (height (car (gimp-drawable-height given-layer))))
+    (gimp-image-select-rectangle
+     given-image
+     operation
+     upper-left-x
+     upper-left-y
+     width
+     height)))
 
 
 (define (slice-layers--slice-layer
