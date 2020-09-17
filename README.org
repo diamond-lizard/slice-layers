@@ -31,10 +31,10 @@ Choose whether to slice the image vertically or horizontally.
 How wide you want each slice to be
 **** If you have selected vertical slices:
 This slice width will be horizontal (on the X axis, or along the image width)
-The slice width for vertical slices can not exceed the layer width.
+The slice width for vertical slices should not exceed the layer width.
 **** If you have selected horizontal slices:
 This slice width will be vertical (on the Y axis, or along the image height)
-The slice width for horizontal slices can not exceed the layer height.
+The slice width for horizontal slices should not exceed the layer height.
 ** Testing:
 This script was only tested on GIMP 2.10.8 on amd64 Gentoo Linux
 ** FAQ
