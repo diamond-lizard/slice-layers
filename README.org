@@ -48,7 +48,7 @@ Then try running the script again.
 If you have only one layer or each layer in your image is the same, you won't see an effect.
 You must have two or more layers in your image, and each layer must be different.
 ** Issues and bugs
-*** Report bugs here:  https://github.com/diamond-lizard/slice-layers/issues
+*** Report bugs: [[https://github.com/diamond-lizard/slice-layers/issues][here]].
 ** LICENSE
 Copyright (C) 2020 - Sergey Goldgaber
 
