@@ -100,6 +100,17 @@
          layers-and-positions)))
 
 
+(define (slice-layers--fill-layer-with-black
+         layer)
+  (let* ((black '(0 0 0))
+         (ignored
+          (gimp-context-set-foreground black))
+         (gimp-drawable-fill-type FILL-FOREGROUND))
+    (gimp-drawable-fill
+     layer
+     gimp-drawable-fill-type)))
+
+
 (define (slice-layers--fill-layer-with-white
          layer)
   (let* ((white '(255 255 255))
@@ -126,10 +137,10 @@
            number-of-layers
            slice-width-in-pixels))
          (ignored
-          (slice-layers--fill-layer-with-white
+          (slice-layers--fill-layer-with-black
            pattern-layer))
          (ignored
-          (slice-layers--fill-slice-with-black
+          (slice-layers--fill-slice-with-white
            given-image
            pattern-layer
            layer-position
@@ -191,6 +202,45 @@
      width
      height)
     (gimp-context-set-foreground black)
+    (gimp-edit-fill
+     layer
+     gimp-drawable-fill-type)
+    (gimp-selection-none given-image)))
+
+
+(define (slice-layers--fill-slice-with-white
+         given-image
+         layer
+         layer-position
+         number-of-layers
+         vertical-or-horizontal
+         slice-width-in-pixels)
+  (let ((upper-left-x
+         (if (equal? vertical-or-horizontal 0)
+             (* layer-position slice-width-in-pixels)
+             0))
+        (upper-left-y
+         (if (equal? vertical-or-horizontal 0)
+             0
+             (* layer-position slice-width-in-pixels)))
+        (width
+         (if (equal? vertical-or-horizontal 0)
+             slice-width-in-pixels
+             (car (gimp-drawable-width layer))))
+        (height
+         (if (equal? vertical-or-horizontal 0)
+             (car (gimp-drawable-height layer))
+             slice-width-in-pixels))
+        (white '(255 255 255))
+        (gimp-drawable-fill-type FILL-FOREGROUND))
+    (gimp-image-select-rectangle
+     given-image
+     CHANNEL-OP-REPLACE
+     upper-left-x
+     upper-left-y
+     width
+     height)
+    (gimp-context-set-foreground white)
     (gimp-edit-fill
      layer
      gimp-drawable-fill-type)
