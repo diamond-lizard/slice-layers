@@ -12,7 +12,11 @@ This script was inspired by u/trandoductin's post titled: [[https://old.reddit.c
 ****** 3c - then on 2nd layer of 8 layer image select the mask drag copied pattern onto image to fill the layer mask with the 8x8 pattern with 2nd column as white.
 ***** 4 - repeat step 3 for other layers drawing a different white column each time.
 *** Alternatives
-G'MIC 2.9.0_pre has a new filter under Sequences / Moiré Animation which is supposed to do something similar
+**** [[https://gmic.eu/][G'MIC]]'s [[https://twitter.com/gmic_eu/status/1234525005725229056][Sequences / Moiré Animation filter]]
+This filter has a similar effect, but:
+***** it does not allow one to set the slice width
+***** it only generates a merged frame and a mask
+so it's impossible to manipulate the original layers after applying the filter to get a different effect
 ** Installation
 *** 1
 Copy the "slice-layers.scm" file to $XDG_CONFIG_HOME/GIMP/2.10/scripts or an alternate location (chosen via Preferences -> Folders -> Scripts)
