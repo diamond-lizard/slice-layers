@@ -19,12 +19,11 @@ Copy the "slice-layers.scm" file to $XDG_CONFIG_HOME/GIMP/2.10/scripts or an alt
 *** 2
 Filters -> Script-Fu -> Refresh Scripts
 ** Use
-*** 1 - Make sure the image's mode is RGB (Image -> Mode -> RGB)
-*** 2 - Load different images in to two or more layers
-*** 3 - Click on any layer in the Layers tab
-*** 4 - Run the script from: Filters -> Artistic -> Slice Layers
-*** 5 - Set the script's parameters to your taste in the dialog that appears.
-*** 6 - Click "OK" to generate the sliced image
+*** 1 - Load different images in to two or more layers
+*** 2 - Click on any layer in the Layers tab
+*** 3 - Run the script from: Filters -> Artistic -> Slice Layers
+*** 4 - Set the script's parameters to your taste in the dialog that appears.
+*** 5 - Click "OK" to generate the sliced image
 ** User-configurable parameters
 *** Vertical or horizontal slices?
 Choose whether to slice the image vertically or horizontally.

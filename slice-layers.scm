@@ -327,7 +327,7 @@
                     "Sergey Goldgaber"
                     "Copyright 2020, Sergey Goldgaber"
                     "Sep 15, 2020"
-                    "RGB, RGBA"
+                    ""
                     SF-IMAGE "Image" 0
                     SF-DRAWABLE "Layer" 0
                     SF-OPTION "Vertical or horizontal slices?" '("Vertical" "Horizontal")
